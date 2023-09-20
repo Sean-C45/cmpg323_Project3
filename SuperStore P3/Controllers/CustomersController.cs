@@ -16,21 +16,21 @@ namespace Controllers
     public class CustomersController : Controller
     {
         private readonly SuperStoreContext _context;
+        private readonly ICustomerRepository CustomerRepository;
 
-        public CustomersController(SuperStoreContext context)
+        public CustomersController(SuperStoreContext context, ICustomerRepository customerRepository)
         {
             _context = context;
+            CustomerRepository = customerRepository;
         }
 
         // GET: Customers
         public async Task<IActionResult> Index()
         {
-            CustomerRepository customerRepository = new CustomerRepository();
-            var results = customerRepository.GetAll();
+            
+            var results = CustomerRepository.GetAll();
 
-            return _context.Customers != null ?
-                        View(await _context.Customers.ToListAsync()) :
-                        Problem("Entity set 'SuperStoreContext.Customers'  is null.");
+            return View(results);   
         }
 
         // GET: Customers/Details/5
