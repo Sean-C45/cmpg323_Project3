@@ -9,15 +9,15 @@ using EcoPower_Logistics.Repository;
 
 namespace EcoPower_Logistics.Repository
 {
-    public class CustomerRepository: GenericRepository<Customer>, ICustomerRepository
+    public class CustomerRepository : GenericRepository<Customer>, ICustomerRepository
     {
-        public CustomerRepository(SuperStoreContext context)
-        { 
+        public CustomerRepository(SuperStoreContext context):base(context) 
+        {
         }
 
         public Customer GetMostRescentCustomer()
         {
-            return _context.Customer.OrderByDescending(Customer => Customer.CustomerId).FirstOrDefault();
+            return _context.Customers.OrderByDescending(Customer => Customer.CustomerId).FirstOrDefault();
 
         }
     }
