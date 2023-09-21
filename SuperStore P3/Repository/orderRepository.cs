@@ -4,12 +4,17 @@ using Models;
 
 namespace EcoPower_Logistics.Repository
 {
-    public class orderRepository
+    public class orderRepository : GenericRepository<Order>, IOrderRepository
     {
-        protected readonly SuperStoreContext _context = new SuperStoreContext();
-        public IEnumerable<Order> GetAll()
+        public orderRepository(SuperStoreContext context) : base(context)
         {
-            return _context.Orders.ToList();
         }
+
+        public Order GetMostRecentOrder()
+        {
+            return _context.Orders.OrderByDescending(Order => Order.OrderId).FirstOrDefault();
+
+        }
+
     }
 }
